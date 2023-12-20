@@ -57,7 +57,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                                               upload_to=modify_filename,
                                               max_length=300, validators=[validate_file_extension])
 
-
     # Membership.
     has_valid_membership = models.BooleanField(default=False, verbose_name="valid membership")
     # Meta.
