@@ -36,9 +36,9 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == True
+DEBUG = os.environ.get('DEBUG') == 'True'
 
-IS_PRODUCTION = os.environ.get('IS_PRODUCTION') == True
+IS_PRODUCTION = os.environ.get('IS_PRODUCTION') == 'True'
 
 # On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
 # validation of the Host header in the incoming HTTP request. On other platforms you may need
