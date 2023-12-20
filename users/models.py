@@ -41,7 +41,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_born = models.DateField(verbose_name="Birthday", blank=False, default=None)
 
     # Address
-    street = models.CharField(max_length=200, blank=False, default=None)
+    street = models.CharField(max_length=250, blank=False, default=None)
     city = models.CharField(max_length=400, blank=False, default=None)
     zipcode = models.IntegerField(validators=[validate_zipcode], blank=False, default=None)
     # Contact.
