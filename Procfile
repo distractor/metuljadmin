@@ -1,2 +1,2 @@
-web: gunicorn metuljadmin.wsgi
+web: gunicorn metuljadmin:metuljadmin
 release: python manage.py migrate
