@@ -181,9 +181,9 @@ WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CSRF_TRUSTED_ORIGINS = ["https://metuljadmin-253c58378233.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = ["https://metuljadmin-2aee793e4cbb.herokuapp.com/"]
 
-CORS_ORIGIN_WHITELIST = ('https://ec2-34-193-110-25.compute-1.amazonaws.com',)
+CORS_ORIGIN_WHITELIST = ('ec2-34-250-252-161.eu-west-1.compute.amazonaws.com',)
 
 LOGIN_REDIRECT_URL = "/profile"
 LOGOUT_REDIRECT_URL = "/"
