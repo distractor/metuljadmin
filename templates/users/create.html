@@ -1,0 +1,288 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <section class="text-center">
+        <div class="card mb-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body py-5 px-md-5">
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <form method="POST" class="post-form">
+                            {% csrf_token %}
+                            <h2 class="fw-bold mb-5">Create new profile</h2>
+                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                            <div class="row">
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">First name</span>
+                                        {{ form.first_name }}
+                                        {% if form.first_name.errors %}
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    {% for error in form.first_name.errors %}
+                                                        <li><strong>{{ error|escape }}</strong></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Last name</span>
+                                        {{ form.last_name }}
+                                        {% if form.last_name.errors %}
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    {% for error in form.last_name.errors %}
+                                                        <li><strong>{{ error|escape }}</strong></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Email</span>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                {% for error in form.email.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Passwords input -->
+                            <div class="row">
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Password</span>
+                                        {{ form.password1 }}
+                                        {% if form.password1.errors %}
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    {% for error in form.password1.errors %}
+                                                        <li><strong>{{ error|escape }}</strong></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Confirm password</span>
+                                        {{ form.password2 }}
+                                        {% if form.password2.errors %}
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    {% for error in form.password2.errors %}
+                                                        <li><strong>{{ error|escape }}</strong></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3>Personal information</h3>
+                            <!-- birthday input -->
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Birthday</span>
+                                    {#                                    <input type="date_born" class="form-control" name="date_born"  placeholder="23/06/1987"#}
+                                    {#                                           aria-label="date_born" aria-describedby="date_born" id="date_born-input"/>#}
+                                    {{ form.date_born }}
+                                    {% if form.date_born.errors %}
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                {% for error in form.date_born.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- emso input -->
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">EMŠO</span>
+                                    {#                                    <input type="date_born" class="form-control" name="date_born"  placeholder="23/06/1987"#}
+                                    {#                                           aria-label="date_born" aria-describedby="date_born" id="date_born-input"/>#}
+                                    {{ form.social_security_number }}
+                                    {% if form.social_security_number.errors %}
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                {% for error in form.social_security_number.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h3>Contact information</h3>
+                            <!-- phone input -->
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Telephone</span>
+                                    {#                                    <input type="date_born" class="form-control" name="date_born"  placeholder="23/06/1987"#}
+                                    {#                                           aria-label="date_born" aria-describedby="date_born" id="date_born-input"/>#}
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                {% for error in form.phone_number.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- address input -->
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Street</span>
+                                    {#                                    <input type="date_born" class="form-control" name="date_born"  placeholder="23/06/1987"#}
+                                    {#                                           aria-label="date_born" aria-describedby="date_born" id="date_born-input"/>#}
+                                    {{ form.street }}
+                                    {% if form.street.errors %}
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                {% for error in form.street.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- post input -->
+                            <div class="row">
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Zipcode</span>
+                                        {{ form.zipcode }}
+                                        {% if form.zipcode.errors %}
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    {% for error in form.zipcode.errors %}
+                                                        <li><strong>{{ error|escape }}</strong></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">City</span>
+                                        {{ form.city }}
+                                        {% if form.city.errors %}
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    {% for error in form.city.errors %}
+                                                        <li><strong>{{ error|escape }}</strong></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>In {% now "Y" %} I need ...</h3>
+                            <!-- membership -->
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <div class="form-check col-sm-6">
+                                        {{ form.has_valid_membership }}
+                                        <label class="form-check-label" for="exampleCheck1">Valid Metulj
+                                            membership</label>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent" style="text-align: left;"><p
+                                        style="color:#707B7C ;"><small>
+                                    With valid membership at DJP Metulj, you are invited to picnics. :)</small></p>
+                                </div>
+                            </div>
+                            <!-- ZPLS -->
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <div class="form-check col-sm-2">
+                                        {{ form.has_zpls }}
+                                        <label class="form-check-label" for="exampleCheck1">ZPLS</label>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent" style="text-align: left;"><p
+                                        style="color:#707B7C ;"><small>
+                                    As a member of ZPLS you are allowed to take off at any Slovenian take-off place. You
+                                    also
+                                    have permission to use the official radio frequency, and you will 3-4 times a year
+                                    also receive a magazine "IKAR" at your home address.</small></p>
+                                </div>
+                            </div>
+                            <!-- FAI -->
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <div class="form-check col-sm-2">
+                                        {{ form.has_fai }}
+                                        <label class="form-check-label" for="exampleCheck1">FAI</label>
+
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent" style="text-align: left;"><p
+                                        style="color:#707B7C ;"><small>FAI licenses
+                                    are for those who want to join competitions. If you do not wish to compete, you do
+                                    not need a FAI license.</small></p>
+
+                                    <p
+                                            style="color:#707B7C ;"><small>For a valid FAI licence, you must also
+                                        provide the anti-doping certificate, which you can obtain <a
+                                                href="https://adel.wada-ama.org/learn"> here</a>. Once you have the
+                                        certificate, please use the field below to upload the PDF. </small></p>
+                                    {{ form.antidoping_certificate }}
+                                    {% if not form.antidoping_certificate.value %}
+                                        <div class="mt-3">
+                                            <h6> You can also upload the certificate later. </h6>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- Submit button -->
+                            <button type="submit" class="save btn btn-secondary">Save</button>
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        {% for error in form.non_field_errors %}
+                                            <li><strong>{{ error }}</strong></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

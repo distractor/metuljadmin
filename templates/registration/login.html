@@ -1,0 +1,76 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+        {% else %}
+            <h1 class="mb-4">Please log in to access content ...</h1>
+        {% endif %}
+    {% endif %}
+
+    <div class="card mb-3 shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body py-5 px-md-5">
+            <form method="post" action="{% url 'login' %}">{% csrf_token %}
+                <div class="form-group">
+                    <div class="col col-sm-6">
+                        <div class="row">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">Email</span>
+                                <input class="form-control" id="{{ form.username.id_for_label }}"
+                                       name="{{ form.username.html_name }}" type="text"/>
+                                {% if form.username.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for error in form.username.errors %}
+                                                <li><strong>{{ error|escape }}</strong></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">{{ form.password.label }}</span>
+                                <input class="form-control" id="{{ form.password.id_for_label }}"
+                                       name="{{ form.password.html_name }}" type="password"/>
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for error in form.password.errors %}
+                                                <li><strong>{{ error|escape }}</strong></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="save btn btn-secondary mt-2">log in</button>
+                    </div>
+                </div>
+                <div class="col col-sm-6"></div>
+            </form>
+            {# Assumes you setup the password_reset view in your URLconf #}
+            <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+    {% else %}
+        <h1 class="mb-2">Or create new account ...</h1>
+        <a class="save btn btn-secondary" href="{% url 'create_new' %}">Create new account</a>
+    {% endif %}
+
+{% endblock %}
