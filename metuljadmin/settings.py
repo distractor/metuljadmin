@@ -14,54 +14,36 @@ import secrets
 from pathlib import Path
 
 import dj_database_url
-from django.contrib import messages
 import django_heroku
+from django.contrib import messages
+from dotenv import load_dotenv
 
+# Take environment variables from .env file
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    default=secrets.token_urlsafe(nbytes=64),
-)
+SECRET_KEY = os.environ.get('SECRET_KEY')
+# EMAIL.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get(
-    "EMAIL_HOST",
-    default="mail.metuljmania.com",
-)
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-EMAIL_PORT = os.environ.get(
-    "EMAIL_PORT",
-    default=123,
-)
-EMAIL_HOST_USER = os.environ.get(
-    "EMAIL_HOST_USER",
-    default="no-reply@gmail.com",
-)
-EMAIL_HOST_PASSWORD = os.environ.get(
-    "EMAIL_HOST_PASSWORD",
-    default="passwd",
-)
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') == True
 
-IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
-
-# SECURITY WARNING: don't run with debug turned on in production!
-if not IS_HEROKU_APP:
-    DEBUG = True
+IS_PRODUCTION = os.environ.get('IS_PRODUCTION') == True
 
 # On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
 # validation of the Host header in the incoming HTTP request. On other platforms you may need
 # to list the expected hostnames explicitly to prevent HTTP Host header attacks. See:
 # https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-ALLOWED_HOSTS
-if IS_HEROKU_APP:
+if IS_PRODUCTION:
     ALLOWED_HOSTS = [".herokuapp.com"]
 else:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
@@ -117,7 +99,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'metuljadmin.wsgi.application'
 
 # Database
-if IS_HEROKU_APP:
+if IS_PRODUCTION:
     DATABASES = {
         "default": dj_database_url.config(
             conn_max_age=600,
@@ -168,18 +150,9 @@ USE_TZ = True
 
 
 # AWS S3
-AWS_ACCESS_KEY_ID = os.environ.get(
-    "AWS_ACCESS_KEY_ID",
-    default="yourkey",
-)
-AWS_SECRET_ACCESS_KEY = os.environ.get(
-    "AWS_SECRET_ACCESS_KEY",
-    default="yourkey",
-)
-AWS_STORAGE_BUCKET_NAME = os.environ.get(
-    "AWS_STORAGE_BUCKET_NAME",
-    default="yourbucket",
-)
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_OBJECT_PARAMETERS = {
@@ -210,7 +183,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CSRF_TRUSTED_ORIGINS = ["https://metuljadmin-253c58378233.herokuapp.com"]
 
 CORS_ORIGIN_WHITELIST = ('https://ec2-34-193-110-25.compute-1.amazonaws.com',)
-
 
 LOGIN_REDIRECT_URL = "/profile"
 LOGOUT_REDIRECT_URL = "/"
