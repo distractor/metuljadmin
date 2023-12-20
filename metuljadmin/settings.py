@@ -211,6 +211,7 @@ CSRF_TRUSTED_ORIGINS = ["https://metuljadmin-253c58378233.herokuapp.com"]
 
 CORS_ORIGIN_WHITELIST = ('https://ec2-34-193-110-25.compute-1.amazonaws.com',)
 
+
 LOGIN_REDIRECT_URL = "/profile"
 LOGOUT_REDIRECT_URL = "/"
 
