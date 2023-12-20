@@ -1,2 +1,2 @@
-web: gunicorn metuljadmin.wsgi
+web: gunicorn metuljadmin.wsgi --preload
 release: python manage.py migrate
