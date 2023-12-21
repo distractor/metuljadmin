@@ -3,6 +3,7 @@ import csv
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.http import HttpResponse
+from django.core.files.storage import get_storage_class
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser
@@ -105,16 +106,24 @@ class CustomUserAdmin(UserAdmin):
     def export_for_LZS(self, request, queryset):
         meta = self.model._meta
         field_names = ['first_name', 'last_name', 'date_born', 'street', 'city', 'zipcode', 'social_security_number',
-                       'has_fai']
-
+                       'has_fai', 'antidoping_certificate']
+        media_storage = get_storage_class()()
         response = HttpResponse(content_type='text/xlsx')
         response['Content-Disposition'] = 'attachment; filename=LZS_export.xlsx'
         writer = csv.writer(response)
 
-        writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'EMŠO', 'FAI'])
+        writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'EMŠO', 'FAI', 'Certifikat'])
         for obj in queryset:
             row = [getattr(obj, field) if getattr(obj, "has_valid_membership") else None for field in field_names]
             row = ['Da' if v == True else ('Ne' if v == False else v) for v in row]
+
+            # Obtain full s3 link.
+            if obj.antidoping_certificate.name != "":
+                boto_s3_url = media_storage.url(name=obj.antidoping_certificate.name)
+            else:
+                boto_s3_url = "missing"
+            row[-1] = boto_s3_url
+
             if row[0] is not None:
                 writer.writerow(row)
 
