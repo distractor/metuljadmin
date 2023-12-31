@@ -35,7 +35,8 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ("email", "first_name", "last_name", "date_born", "street", "city", "zipcode", "phone_number",
-                  "social_security_number", "has_zpls", "has_fai", "has_valid_membership", "antidoping_certificate")
+                  "social_security_number", "has_zpls", "has_fai", "wants_valid_membership", "paid_membership",
+                  "antidoping_certificate")
 
         widgets = {
             'first_name': TextInput(attrs={'placeholder': 'Andrej'}),
@@ -49,7 +50,7 @@ class CustomUserCreationForm(UserCreationForm):
             'social_security_number': TextInput(attrs={'placeholder': '2305987500184'}),
             'has_zpls': CheckboxInput(attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
             'has_fai': CheckboxInput(attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
-            'has_valid_membership': CheckboxInput(
+            'wants_valid_membership': CheckboxInput(
                 attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
             "antidoping_certificate": FileInput(),
         }
@@ -67,7 +68,7 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ("email", "first_name", "last_name", "date_born", "street", "city", "zipcode", "phone_number",
-                  "social_security_number", "has_zpls", "has_fai", "has_valid_membership", "antidoping_certificate")
+                  "social_security_number", "has_zpls", "has_fai", "wants_valid_membership", "antidoping_certificate")
 
         widgets = {
             'first_name': TextInput(attrs={'placeholder': 'Andrej'}),
@@ -81,7 +82,9 @@ class CustomUserChangeForm(UserChangeForm):
             'social_security_number': TextInput(attrs={'placeholder': '2305987500184'}),
             'has_zpls': CheckboxInput(attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
             'has_fai': CheckboxInput(attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
-            'has_valid_membership': CheckboxInput(
+            'wants_valid_membership': CheckboxInput(
+                attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
+            'paid_membership': CheckboxInput(
                 attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
             "antidoping_certificate": FileInput(),
         }

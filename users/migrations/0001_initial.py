@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('has_zpls', models.BooleanField(default=False, verbose_name='ZPLS')),
                 ('has_fai', models.BooleanField(default=False, verbose_name='FAI')),
                 ('antidoping_certificate', models.FileField(blank=True, max_length=300, null=True, upload_to=users.models.modify_filename, validators=[users.models.validate_file_extension])),
-                ('has_valid_membership', models.BooleanField(default=False, verbose_name='valid membership')),
+                ('wants_valid_membership', models.BooleanField(default=False, verbose_name='valid membership')),
                 ('is_staff', models.BooleanField(default=False, verbose_name='Staff')),
                 ('is_active', models.BooleanField(default=True)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),

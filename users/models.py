@@ -58,7 +58,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                                               max_length=300, validators=[validate_file_extension])
 
     # Membership.
-    has_valid_membership = models.BooleanField(default=False, verbose_name="valid membership")
+    wants_valid_membership = models.BooleanField(default=False, verbose_name="wants valid membership")
+    paid_membership = models.BooleanField(default=False, verbose_name="paid membership")
     # Meta.
     is_staff = models.BooleanField(default=False, verbose_name="Staff")
     is_active = models.BooleanField(default=True)

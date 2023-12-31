@@ -11,7 +11,8 @@ from .models import CustomUser
 
 @admin.action(description="Reset required flags")
 def reset_all_required_flags(modeladmin, request, queryset):
-    queryset.update(has_valid_membership=False)
+    queryset.update(wants_valid_membership=False)
+    queryset.update(paid_membership=False)
     queryset.update(has_zpls=False)
     queryset.update(has_fai=False)
 
@@ -22,7 +23,8 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     # Displays on home page.
     list_display = (
-        "first_name", "last_name", "email", "date_born", "has_zpls", "has_fai", "has_valid_membership", "modified_date")
+        "first_name", "last_name", "email", "date_born", "has_zpls", "has_fai", "wants_valid_membership",
+        "paid_membership", "modified_date")
     # Filter.
     list_filter = ()
     # Specific user view and settings.
@@ -32,7 +34,7 @@ class CustomUserAdmin(UserAdmin):
         ("Address", {"fields": ("street", "zipcode", "city")}),
         ("Contact information", {"fields": ("email", "phone_number")}),
         ("Licences", {"fields": ("has_zpls", "has_fai", "antidoping_certificate")}),
-        ("Membership", {"fields": ("has_valid_membership",)}),
+        ("Membership", {"fields": ("wants_valid_membership", "paid_membership")}),
         ("Roles", {"fields": ("is_staff",)}),
         ("Udpates", {"fields": ("modified_date",)})
     )
@@ -70,7 +72,8 @@ class CustomUserAdmin(UserAdmin):
         ("Membership", {
             "classes": ("wide",),
             "fields": (
-                "has_valid_membership",
+                "wants_valid_membership",
+                "paid_membership",
             )}
          ),
         ("Roles", {
@@ -95,8 +98,9 @@ class CustomUserAdmin(UserAdmin):
 
         writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka'])
         for obj in queryset:
-            row = [getattr(obj, field) if (getattr(obj, "has_zpls") and getattr(obj, "has_valid_membership")) else None
-                   for field in field_names]
+            row = [
+                getattr(obj, field) if (getattr(obj, "has_zpls") and getattr(obj, "wants_valid_membership")) else None
+                for field in field_names]
             if row[0] is not None:
                 writer.writerow(row)
 
@@ -114,7 +118,7 @@ class CustomUserAdmin(UserAdmin):
 
         writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'EMŠO', 'FAI', 'Certifikat'])
         for obj in queryset:
-            row = [getattr(obj, field) if getattr(obj, "has_valid_membership") else None for field in field_names]
+            row = [getattr(obj, field) if getattr(obj, "wants_valid_membership") else None for field in field_names]
             row = ['Da' if v == True else ('Ne' if v == False else v) for v in row]
 
             # Obtain full s3 link.
