@@ -25,6 +25,7 @@ def user_edit(request):
     else:
         form = CustomUserChangeForm(instance=request.user)
 
+
     args['form'] = form
     return render(request, 'users/profile_show.html', args)
 
