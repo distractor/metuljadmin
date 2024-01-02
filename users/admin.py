@@ -99,7 +99,7 @@ class CustomUserAdmin(UserAdmin):
         writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka'])
         for obj in queryset:
             row = [
-                getattr(obj, field) if (getattr(obj, "has_zpls") and getattr(obj, "wants_valid_membership")) else None
+                getattr(obj, field) if (getattr(obj, "has_zpls") and getattr(obj, "paid_membership")) else None
                 for field in field_names]
             if row[0] is not None:
                 writer.writerow(row)
@@ -118,7 +118,7 @@ class CustomUserAdmin(UserAdmin):
 
         writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'EMŠO', 'FAI', 'Certifikat'])
         for obj in queryset:
-            row = [getattr(obj, field) if getattr(obj, "wants_valid_membership") else None for field in field_names]
+            row = [getattr(obj, field) if getattr(obj, "paid_membership") else None for field in field_names]
             row = ['Da' if v == True else ('Ne' if v == False else v) for v in row]
 
             # Obtain full s3 link.
