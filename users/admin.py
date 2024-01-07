@@ -118,7 +118,7 @@ class CustomUserAdmin(UserAdmin):
 
         writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'EMŠO', 'FAI', 'Certifikat'])
         for obj in queryset:
-            row = [getattr(obj, field) if getattr(obj, "paid_membership") else None for field in field_names]
+            row = [getattr(obj, field) for field in field_names]
             row = ['Da' if v == True else ('Ne' if v == False else v) for v in row]
 
             # Obtain full s3 link.
