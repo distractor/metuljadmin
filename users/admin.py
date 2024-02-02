@@ -99,7 +99,7 @@ class CustomUserAdmin(UserAdmin):
         writer.writerow(['Ime', 'Priimek', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka'])
         for obj in queryset:
             row = [
-                getattr(obj, field) if (getattr(obj, "has_zpls") and getattr(obj, "paid_membership")) else None
+                getattr(obj, field) if getattr(obj, "has_zpls") else None
                 for field in field_names]
             if row[0] is not None:
                 writer.writerow(row)
