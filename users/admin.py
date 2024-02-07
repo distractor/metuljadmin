@@ -106,6 +106,23 @@ class CustomUserAdmin(UserAdmin):
 
         return response
 
+    @admin.action(description="Export ALL")
+    def export_for_ZPLS(self, request, queryset):
+        meta = self.model._meta
+        field_names = ['first_name', 'last_name', 'email', 'date_born', 'street', 'city', 'zipcode']
+
+        response = HttpResponse(content_type='text/xlsx')
+        response['Content-Disposition'] = 'attachment; filename=metuljadmin_export.xlsx'
+        writer = csv.writer(response)
+
+        writer.writerow(['Ime', 'Priimek', 'Email', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka'])
+        for obj in queryset:
+            row = [getattr(obj, field) for field in field_names]
+            if row[0] is not None:
+                writer.writerow(row)
+
+        return response
+
     @admin.action(description="Export for LZS")
     def export_for_LZS(self, request, queryset):
         meta = self.model._meta
