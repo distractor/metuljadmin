@@ -107,7 +107,7 @@ class CustomUserAdmin(UserAdmin):
         return response
 
     @admin.action(description="Export ALL")
-    def export_for_ZPLS(self, request, queryset):
+    def export_all(self, request, queryset):
         meta = self.model._meta
         field_names = ['first_name', 'last_name', 'email', 'date_born', 'street', 'city', 'zipcode']
 
@@ -150,7 +150,7 @@ class CustomUserAdmin(UserAdmin):
 
         return response
 
-    actions = [reset_all_required_flags, export_for_ZPLS, export_for_LZS]
+    actions = [reset_all_required_flags, export_for_ZPLS, export_for_LZS, export_all]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
