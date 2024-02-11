@@ -74,3 +74,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Message(models.Model):
+    emails = models.TextField(max_length=5000, verbose_name="emails", blank=False, default=None)
+    subject = models.CharField(max_length=200, verbose_name="subject", blank=False, default=None)
+    message = models.TextField(max_length=5000, verbose_name="message", blank=False, default=None)

@@ -1,9 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
-from django.forms import TextInput, NumberInput, CheckboxInput, FileInput
+from django.forms import TextInput, NumberInput, CheckboxInput, FileInput, ModelForm
 
-from .models import CustomUser
+from .models import CustomUser, Message
 
 
 class DateInput(forms.DateInput):
@@ -87,4 +87,16 @@ class CustomUserChangeForm(UserChangeForm):
             'paid_membership': CheckboxInput(
                 attrs={'class': 'form-check-input', 'type': 'checkbox', 'style': 'width:20px;'}),
             "antidoping_certificate": FileInput(),
+        }
+
+
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = ("emails", "subject", "message")
+
+        widgets = {
+            'emails': TextInput(attrs={'placeholder': 'Send to'}),
+            'subject': TextInput(attrs={'placeholder': 'Subject'}),
+            'message': forms.Textarea(attrs={'rows': 4, 'cols': '100%', 'placeholder': 'Message'}),
         }
