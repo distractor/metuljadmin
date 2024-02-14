@@ -115,7 +115,7 @@ class CustomUserAdmin(UserAdmin):
         response['Content-Disposition'] = 'attachment; filename=metuljadmin_export.xlsx'
         writer = csv.writer(response)
 
-        writer.writerow(['Ime', 'Priimek', 'Email', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'ZPLS', 'FAI', 'članarina'])
+        writer.writerow(['Ime', 'Priimek', 'Email', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'ZPLS', 'FAI', 'Članarina'])
         for obj in queryset:
             row = [getattr(obj, field) for field in field_names]
             if row[0] is not None:
