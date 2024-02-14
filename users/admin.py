@@ -109,13 +109,13 @@ class CustomUserAdmin(UserAdmin):
     @admin.action(description="Export ALL")
     def export_all(self, request, queryset):
         meta = self.model._meta
-        field_names = ['first_name', 'last_name', 'email', 'date_born', 'street', 'city', 'zipcode']
+        field_names = ['first_name', 'last_name', 'email', 'date_born', 'street', 'city', 'zipcode', 'has_zpls', 'has_fai', 'wants_valid_membership']
 
         response = HttpResponse(content_type='text/xlsx')
         response['Content-Disposition'] = 'attachment; filename=metuljadmin_export.xlsx'
         writer = csv.writer(response)
 
-        writer.writerow(['Ime', 'Priimek', 'Email', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka'])
+        writer.writerow(['Ime', 'Priimek', 'Email', 'Rojen', 'Ulica', 'Mesto', 'Poštna številka', 'ZPLS', 'FAI', 'članarina'])
         for obj in queryset:
             row = [getattr(obj, field) for field in field_names]
             if row[0] is not None:
