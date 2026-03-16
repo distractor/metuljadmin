@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - internal
+
+  web:
+    build: .
+    restart: always
+    depends_on:
+      - db
+    env_file: .env
+    environment:
+      VIRTUAL_HOST: admin.metuljmania.com
+      VIRTUAL_PORT: 8000
+    networks:
+      - nginx-proxy
+      - internal
+
+volumes:
+  postgres_data:
+
+networks:
+  internal:
+  nginx-proxy:
+    external: true

@@ -13,8 +13,6 @@ import os
 import secrets
 from pathlib import Path
 
-import dj_database_url
-import django_heroku
 from django.contrib import messages
 from dotenv import load_dotenv
 
@@ -40,12 +38,8 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 IS_PRODUCTION = os.environ.get('IS_PRODUCTION') == 'True'
 
-# On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
-# validation of the Host header in the incoming HTTP request. On other platforms you may need
-# to list the expected hostnames explicitly to prevent HTTP Host header attacks. See:
-# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-ALLOWED_HOSTS
 if IS_PRODUCTION:
-    ALLOWED_HOSTS = [".herokuapp.com"]
+    ALLOWED_HOSTS = ['admin.metuljmania.com']
 else:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -177,7 +171,11 @@ WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CSRF_TRUSTED_ORIGINS = ["https://metuljadmin-2aee793e4cbb.herokuapp.com/"]
+CSRF_TRUSTED_ORIGINS = ["https://admin.metuljmania.com"]
+
+# Cloudflare Tunnel terminates SSL and forwards requests over HTTP internally.
+# This tells Django to trust the X-Forwarded-Proto header so it knows the original request was HTTPS.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CORS_ORIGIN_WHITELIST = ('https://ec2-34-250-252-161.eu-west-1.compute.amazonaws.com',)
 
@@ -191,7 +189,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-
-django_heroku.settings(locals(), staticfiles=False)
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
